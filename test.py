@@ -17,7 +17,7 @@ import mdn1
 from VT_AE import VT_AE as ae
 from utility_fun import *
 
-prdt = "cable"
+prdt = "01"
 patch_size = 64
 
 ssim_loss = pytorch_ssim.SSIM() # SSIM Loss

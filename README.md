@@ -46,7 +46,7 @@ available annotation tool ["SuperAnnotate"](https://superannotate.com/)
 * *With Noise added the PRO score is 0.897 in contrary to 0.807 without noise.*
 
 # Train (Command Line)
-` python train.py -p "hazelnut" `
+` python train.py -p "물건이름" `
 
 # Cite
 If you use this dataset, please cite it using the following reference:
