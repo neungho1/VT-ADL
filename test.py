@@ -17,7 +17,7 @@ import mdn1
 from VT_AE import VT_AE as ae
 from utility_fun import *
 
-prdt = "01"
+prdt = "01" #test할 제품 선택 :BTAD데이터셋인 경우 제품번호 작성, MVTec 데이터셋인 경우 제품이름 작성
 patch_size = 64
 
 ssim_loss = pytorch_ssim.SSIM() # SSIM Loss

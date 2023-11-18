@@ -169,7 +169,7 @@ def ran_generator(length, shots=1):
         
         
 class Mvtec:
-    def __init__(self, batch_size,root=r"/workspace/eunho/VT-ADL/BTAD", product= 'bottle'):
+    def __init__(self, batch_size,root=r"/workspace/eunho/VT-ADL/BTAD", product= 'bottle'): 
         self.root = root
         self.batch = batch_size
         self.product = product

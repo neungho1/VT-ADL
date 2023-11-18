@@ -13,7 +13,7 @@
 출처: [BeanTech srl](https://www.beantech.it)
 라이센스 유형: [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/legalcode)
 
-데이터 세트에는 세 가지 산업용 제품의 RGB 이미지가 포함되어 있습니다.– [Scan to download](https://avires.dimi.uniud.it/papers/btad/btad.zip)
+데이터 세트에는 세 가지 산업용 제품의 RGB 이미지가 포함되어 있습니다.– [스캔하여 다운로드](https://avires.dimi.uniud.it/papers/btad/btad.zip)
 <img src="image/btad-QR.png">
 
 이미지는 산업용 이미지 수집 시스템에서 캡처한 후 데이터 소유자(Beantech)의 개인 정보 보호 정책을 존중하기 위해 잘라내고 로그 변환을 적용했습니다.  나중에 상업적으로 이용 가능한 주석 도구인 ["SuperAnnotate"](https://superannotate.com/)를 사용하여 데이터에 수동으로 주석을 달아 픽셀 단위의 정확한 ground_truth가 추가되었습니다.
@@ -35,11 +35,17 @@
 <img src="image/no-of-gaus-ablation.png">
 
 ## Regularization
-* * transformer에서 인코딩된 features에 Gaussian noise가 추가되어 정규화되었습니다.* 
+* *transformer에서 인코딩된 features에 Gaussian noise가 추가되어 정규화되었습니다.* 
 * *Noise가 추가된 PRO score는 0.897 Noise가 없는 경우 0.807*
 
 # Train (Command Line)
-` python train.py -p "물건이름" ` BTAD dataset 종류 01,02,03
+` python train.py -p "물건이름" ` 
+* BTAD dataset 종류 '01','02','03'
+* MVTec Dataset 종류 'bottle', 'cable', 'capsule', 'carpet', 'grid', 'hazelnut', 'leather', 'metal_nut', 'pill', 'screw', 'tile', 'toothbrush', 'transistor', 'wood', 'zipper'
+
+# test
+` python test.py `
+* test.py에서 line 20에 있는 변수 prdt에 test할 제품이름 작성 ex. prdt = "01"
 
 # Cite
 이 데이터셋을 사용할 경우, 아래의 참조를 사용하여 인용:
