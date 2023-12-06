@@ -17,7 +17,7 @@ import mdn1
 from VT_AE import VT_AE as ae
 from utility_fun import *
 
-prdt = "01" #test할 제품 선택 :BTAD데이터셋인 경우 제품번호 작성, MVTec 데이터셋인 경우 제품이름 작성
+prdt = "01"
 patch_size = 64
 
 ssim_loss = pytorch_ssim.SSIM() # SSIM Loss
@@ -71,6 +71,7 @@ def Thresholding(data_load = loader[1:], upsample = 1, thres_type = 0, fpr_thres
             if i.size(1)==1:
                 i = torch.stack([i,i,i]).squeeze(2).permute(1,0,2,3)
             vector, reconstructions = model(i.cuda())
+
             pi, mu, sigma = G_estimate(vector)
             
             #Loss calculations
@@ -135,13 +136,19 @@ def Patch_Overlap_Score(threshold, data_load = loader[1:], upsample =1):
                 i = torch.stack([i,i,i]).squeeze(2).permute(1,0,2,3)
             vector, reconstructions = model(i.cuda())
             pi, mu, sigma = G_estimate(vector)
-           
+            
             #Loss calculations
             loss1 = F.mse_loss(reconstructions,i.cuda(), reduction='mean') #Rec Loss
             loss2 = -ssim_loss(i.cuda(), reconstructions) #SSIM loss for structural similarity
             loss3 = mdn1.mdn_loss_function(vector,mu,sigma,pi, test= True) #MDN loss for gaussian approximation
-            loss = loss1 -loss2 + loss3.max()       #Total loss
-            norm_loss_t.append(loss3.detach().cpu().numpy())
+            loss3_fa = reconstructions - i.cuda()
+            
+            loss3_fa = loss3_fa.squeeze(0)
+            loss3_fa = torch.mean(loss3_fa, dim=0, keepdim=True)
+            print(loss3.size(),loss3_fa.size())
+            loss3_fa.unfold(1, patch_size, patch_size).unfold(2, patch_size, patch_size)
+            loss = loss1 -loss2 + loss3_fa.max()       #Total loss
+            norm_loss_t.append(loss3_fa.detach().cpu().numpy())
             total_loss_all.append(loss.detach().cpu().numpy())
             
             if n == 0 :
@@ -152,7 +159,7 @@ def Patch_Overlap_Score(threshold, data_load = loader[1:], upsample =1):
                 loss1_ta.append(loss1.detach().cpu().numpy())
                 loss2_ta.append(loss2.detach().cpu().numpy())
                 loss3_ta.append(loss3.sum().detach().cpu().numpy())
-                
+            print(c,c,c,c,c)
             if upsample==0 :
                 #Mask patch
                 mask_patch = rearrange(j.squeeze(0).squeeze(0), '(h p1) (w p2) -> (h w) p1 p2', p1 = patch_size, p2 = patch_size)
@@ -168,9 +175,10 @@ def Patch_Overlap_Score(threshold, data_load = loader[1:], upsample =1):
                 mask_score_t.append(j.squeeze(0).squeeze(0).cpu().numpy()) # Storing all masks
                 
                 m = torch.nn.UpsamplingBilinear2d((512,512))
-                norm_score = norm_loss_t[-1].reshape(-1,1,512//patch_size,512//patch_size)
+                
+                norm_score = norm_loss_t[-1].reshape(-1,1,512,512)
                 score_map = m(torch.tensor(norm_score))
-                score_map = Filter(score_map , type =0) 
+                score_map = Filter(score_map , type =1) 
 
                    
                 normalised_score_t.append(score_map) # Storing all score maps

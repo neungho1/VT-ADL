@@ -21,7 +21,7 @@ import argparse
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-p", "--product", required=True,default = 'hazelnut',help="product from the dataset MvTec or BTAD")
-ap.add_argument("-e", "--epochs", required=False, default= 400, help="Number of epochs to train")
+ap.add_argument("-e", "--epochs", required=False, default= 10, help="Number of epochs to train")
 ap.add_argument("-lr", "--learning_rate", required=False, default= 0.0001, help="learning rate")
 ap.add_argument("-ps","--patch_size", required=False, default=64, help="Patch size of the images")
 ap.add_argument("-b", "--batch_size", required=False, default=8, help= "batch size")

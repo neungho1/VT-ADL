@@ -1,1 +1,8 @@
 ./__pycache__
+runs/
+saved_model/AE_BTAD_01.pt
+pytorch_ssim/__pycache__/__init__.cpython-310.pyc
+.gitignore
+saved_model/cnn_BTAD_01.pt
+saved_model/G_estimate_Mvtech_01.pt
+saved_model/VT_AE_Mvtech_01.pt

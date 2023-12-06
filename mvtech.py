@@ -47,7 +47,7 @@ def read_files(root,d, product, data_motive = 'train', use_good = True, normal =
                             print(f'total {d_in} images of {i} {d} are: {len(images)}')
                             
                         if (data_motive == 'test') :
-                            if (use_good == False) and (i == 'good') and normal != True:
+                            if (use_good == False) and (i == 'ok') and normal != True:
                                 print(f'the good images for {d_in} images of {i} {d} is not included in the test anomolous data')
                             elif (use_good == False) and (i != 'ok') and normal != True :
                                 tr_img_pth = os.path.join(root, d, d_in,i)
@@ -169,7 +169,7 @@ def ran_generator(length, shots=1):
         
         
 class Mvtec:
-    def __init__(self, batch_size,root=r"/workspace/eunho/VT-ADL/BTAD", product= 'bottle'): 
+    def __init__(self, batch_size,root=r"/workspace/eunho/BTech_Dataset_transformed", product= 'bottle'):
         self.root = root
         self.batch = batch_size
         self.product = product
